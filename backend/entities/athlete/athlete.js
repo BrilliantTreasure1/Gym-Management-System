@@ -1,6 +1,6 @@
 //backend/entitiy/athlete/athlete.js
 
-class athlete{
+class Athlete{
     constructor({
         id,
         name,
@@ -22,4 +22,4 @@ class athlete{
     
 }
 
-module.exports = athlete
+module.exports = Athlete
