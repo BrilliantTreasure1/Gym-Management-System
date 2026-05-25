@@ -32,6 +32,14 @@ async function migrate() {
 
     console.log("✅ Admin table created");
 
+      await pool.query(`
+      INSERT INTO admin (name, last_name, phone_number, password)
+      VALUES ('AGT', 'tabesh', '09392078042', '$2b$10$r1cjx4iA9CvX2xn4Hh/IH.n6v65i.HKMt8KTVu2T4.R1bAXJgDq3e')
+      ON CONFLICT (phone_number) DO NOTHING;
+    `);
+
+    console.log("✅ Default admin checked/inserted");  
+
 
     await pool.end();
 
