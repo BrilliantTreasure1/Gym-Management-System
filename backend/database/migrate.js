@@ -19,6 +19,20 @@ async function migrate() {
 
     console.log("✅ Athlete table created");
 
+     await pool.query(`
+  CREATE TABLE IF NOT EXISTS admin (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  phone_number TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,   
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+    `);
+
+    console.log("✅ Admin table created");
+
+
     await pool.end();
 
   } catch (error) {
