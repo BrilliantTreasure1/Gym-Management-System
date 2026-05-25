@@ -35,6 +35,32 @@ class AdminRepository {
         })
 
     }
+
+    async getUserBynumber(phoneNumber){
+          const query = `
+            SELECT id, name, last_name, phone_number,password, created_at
+            FROM admin
+            WHERE phone_number = $1
+        `;
+
+        const result = await pool.query(query, [phoneNumber]);
+
+         if (result.rows.length === 0) {
+            return null;
+        }
+
+        const row = result.rows[0];
+
+        return new Admin({
+            id:row.id,
+            name: row.name,
+            lastName: row.last_name,
+            phoneNumber: row.phone_number,
+            password: row.password,
+            createdAt : row.created_at
+        })
+
+    }
 }
 
 module.exports = AdminRepository;
