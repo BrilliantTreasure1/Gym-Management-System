@@ -23,6 +23,8 @@ app.post('/auth/login', adminController.login);
 app.post('/register/admin' ,authMiddleware , roleCheck,adminController.register )
 app.post('/register/athlete' ,authMiddleware , roleCheck,athleteController.register )
 
+app.get('/athletes' , authMiddleware ,roleCheck , athleteController.getAll)
+
 
  app.listen(3000, () => {
       console.log(`Server running on port 3000`);
