@@ -42,15 +42,8 @@ class AthleteRepository {
     }
 
     async getAll(){
-        const query = `
-      SELECT 
-        id, 
-        name, 
-        last_name, 
-        phone_number, 
-        created_at,
-
-        (expire_date::date - CURRENT_DATE) AS days_remaining 
+      const query = `
+      SELECT id, name, last_name, phone_number, created_at, expire_date 
       FROM athlete
     `;
 
@@ -64,7 +57,7 @@ class AthleteRepository {
                 lastName: row.last_name,
                 phoneNumber: row.phone_number,
                 createdAt: row.created_at,
-                expire_date: row.days_remaining 
+                expire_date: row.expire_date 
             });
         });
     }
