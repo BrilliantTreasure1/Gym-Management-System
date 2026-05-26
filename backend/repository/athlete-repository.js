@@ -40,6 +40,34 @@ class AthleteRepository {
         })
 
     }
+
+    async getAll(){
+        const query = `
+      SELECT 
+        id, 
+        name, 
+        last_name, 
+        phone_number, 
+        created_at,
+
+        (expire_date::date - CURRENT_DATE) AS days_remaining 
+      FROM athlete
+    `;
+
+     
+    const result = await pool.query(query);
+
+     return result.rows.map(row => {
+            return new Athlete({
+                id: row.id,
+                name: row.name,
+                lastName: row.last_name,
+                phoneNumber: row.phone_number,
+                createdAt: row.created_at,
+                expire_date: row.days_remaining 
+            });
+        });
+    }
 }
 
 module.exports = AthleteRepository;
