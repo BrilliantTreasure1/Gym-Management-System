@@ -1,12 +1,16 @@
 //backend/controller/athlete-controller.js
 
 const RegisterAthlete = require('../usecases/athlete/register-athlete')
+const GetAllAthlete = require('../usecases//athlete/get-all-athlete')
+
 
 const AthleteRepository = require('../repository/athlete-repository')
 const athleteRepository = new AthleteRepository()
 
 
 const registerAthlete = new RegisterAthlete(athleteRepository)
+const getAllAthlete = new GetAllAthlete(athleteRepository)
+
 
 module.exports = {
     async register(req , res){
@@ -41,6 +45,22 @@ module.exports = {
             return res.status(500).json({ error: error.message });  
         }
     },
+
+    async getAll(req , res) {
+      try {
+
+      const athletes = await getAllAthlete.execute();
+
+      return res.status(200).json(athletes);
+
+      } catch (error) {
+
+        return res.status(500).json({ error: error.message });  
+        
+      }
+     
+
+    }
 
     
 }
