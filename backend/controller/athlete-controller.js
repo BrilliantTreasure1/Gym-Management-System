@@ -1,7 +1,9 @@
 //backend/controller/athlete-controller.js
 
 const RegisterAthlete = require('../usecases/athlete/register-athlete')
-const GetAllAthlete = require('../usecases//athlete/get-all-athlete')
+const GetAllAthlete = require('../usecases/athlete/get-all-athlete')
+const GetAthleteByFullname = require('../usecases//athlete/get-athlete-by-fullname')
+
 
 
 const AthleteRepository = require('../repository/athlete-repository')
@@ -10,6 +12,8 @@ const athleteRepository = new AthleteRepository()
 
 const registerAthlete = new RegisterAthlete(athleteRepository)
 const getAllAthlete = new GetAllAthlete(athleteRepository)
+const getAthleteByFullname = new GetAthleteByFullname(athleteRepository)
+
 
 
 module.exports = {
@@ -58,9 +62,31 @@ module.exports = {
         return res.status(500).json({ error: error.message });  
         
       }
-     
 
-    }
+    },
 
-    
+     async getAthleteByFullname(req , res) {
+      try {
+
+        const {name , lastName} = req.query;
+
+           if (!name || typeof name !== "string") {
+        return res.status(400).json({ error: "name is required" });
+      }
+
+       if (!lastName || typeof lastName !== "string") {
+        return res.status(400).json({ error: "lastName is required" });
+      }
+
+      const athletes = await getAthleteByFullname.execute(name , lastName);
+
+      return res.status(200).json(athletes);
+
+      } catch (error) {
+
+        return res.status(500).json({ error: error.message });  
+        
+      }
+}
+
 }
