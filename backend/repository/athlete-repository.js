@@ -61,6 +61,28 @@ class AthleteRepository {
             });
         });
     }
+
+     async getAthleteByFullname(name , lastName){
+      const query = `
+      SELECT id, name, last_name, phone_number, created_at, expire_date 
+      FROM athlete WHERE LOWER(name) = LOWER($1) AND LOWER(last_name) = LOWER($2)
+
+    `;
+
+     
+    const result = await pool.query(query , [name , lastName]);
+
+     return result.rows.map(row => {
+            return new Athlete({
+                id: row.id,
+                name: row.name,
+                lastName: row.last_name,
+                phoneNumber: row.phone_number,
+                createdAt: row.created_at,
+                expire_date: row.expire_date 
+            });
+        });
+    }
 }
 
 module.exports = AthleteRepository;
