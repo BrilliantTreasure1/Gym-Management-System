@@ -24,6 +24,8 @@ app.post('/register/admin' ,authMiddleware , roleCheck,adminController.register 
 app.post('/register/athlete' ,authMiddleware , roleCheck,athleteController.register )
 
 app.get('/athletes' , authMiddleware ,roleCheck , athleteController.getAll)
+app.get('/athlete/fullname' , authMiddleware ,roleCheck , athleteController.getAthleteByFullname)
+
 
 
  app.listen(3000, () => {
