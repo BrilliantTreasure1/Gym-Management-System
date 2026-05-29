@@ -131,6 +131,28 @@ async updateExpireDate(id, newExpireDate) {
     });
 }
 
+async updateAthletePhoneNumber(athleteId, phoneNumber) {
+    const query = `
+        UPDATE athlete
+        SET phone_number = $1
+        WHERE id = $2
+        RETURNING id, name, last_name, phone_number, created_at, expire_date
+    `;
+
+    const result = await pool.query(query, [phoneNumber, athleteId]);
+
+    const row = result.rows[0];
+
+    return new Athlete({
+        id: row.id,
+        name: row.name,
+        lastName: row.last_name,
+        phoneNumber: row.phone_number,
+        createdAt: row.created_at,
+        expire_date: row.expire_date
+    });
+}
+
 
 }
 
