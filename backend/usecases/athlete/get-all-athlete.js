@@ -25,6 +25,7 @@ class GetAllAthlete{
                 lastName: athlete.lastName,
                 phoneNumber: athlete.phoneNumber,
                 createdAt: athlete.createdAt,
+                expire_date: athlete.expire_date,
                 daysRemaining: daysRemaining
             };
         });
