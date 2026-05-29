@@ -3,6 +3,8 @@
 const RegisterAthlete = require('../usecases/athlete/register-athlete')
 const GetAllAthlete = require('../usecases/athlete/get-all-athlete')
 const GetAthleteByFullname = require('../usecases//athlete/get-athlete-by-fullname')
+const RenewAthlete = require('../usecases/athlete/renew-athlete')
+
 
 
 
@@ -13,6 +15,8 @@ const athleteRepository = new AthleteRepository()
 const registerAthlete = new RegisterAthlete(athleteRepository)
 const getAllAthlete = new GetAllAthlete(athleteRepository)
 const getAthleteByFullname = new GetAthleteByFullname(athleteRepository)
+const renewAthleteUsecase = new RenewAthlete(athleteRepository)
+
 
 
 
@@ -87,6 +91,28 @@ module.exports = {
         return res.status(500).json({ error: error.message });  
         
       }
+},
+
+async renewAthlete(req , res){
+  try {
+      const {id} = req.params;
+
+       if (id === undefined || id === null || id === "") {
+      return res.status(400).json({ error: "id is required" });
+      }
+
+      const athleteId = Number(id);
+
+      const athlete = await renewAthleteUsecase.execute(athleteId)
+
+      return res.status(200).json(athlete);
+
+
+  } catch (error) {
+        return res.status(500).json({ error: error.message });  
+   
+  }
+ 
 }
 
 }
