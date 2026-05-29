@@ -1,8 +1,8 @@
 // backend/usecases/athlete/renew-athlete.js
 
 class RenewAthlete {
-    constructor(athleteRepository) {
-        this.athleteRepository = athleteRepository;
+    constructor(AthleteRepository) {
+        this.AthleteRepository = AthleteRepository;
     }
 
     async execute(id) {
@@ -10,7 +10,7 @@ class RenewAthlete {
             throw new Error("athlete id is required");
         }
 
-        const athlete = await this.athleteRepository.getById(id);
+        const athlete = await this.AthleteRepository.getById(id);
 
         if (!athlete) {
             throw new Error("athlete not found");
@@ -29,7 +29,7 @@ class RenewAthlete {
 
         newExpireDate.setDate(newExpireDate.getDate() + 30);
 
-        return await this.athleteRepository.updateExpireDate(id, newExpireDate);
+        return await this.AthleteRepository.updateExpireDate(id, newExpireDate);
     }
 }
 
