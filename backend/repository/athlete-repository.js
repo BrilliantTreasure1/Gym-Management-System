@@ -83,6 +83,55 @@ class AthleteRepository {
             });
         });
     }
+
+    async getById(id) {
+    const query = `
+        SELECT id, name, last_name, phone_number, created_at, expire_date
+        FROM athlete
+        WHERE id = $1
+    `;
+
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+        return null;
+    }
+
+    const row = result.rows[0];
+
+    return new Athlete({
+        id: row.id,
+        name: row.name,
+        lastName: row.last_name,
+        phoneNumber: row.phone_number,
+        createdAt: row.created_at,
+        expire_date: row.expire_date
+    });
+}
+
+async updateExpireDate(id, newExpireDate) {
+    const query = `
+        UPDATE athlete
+        SET expire_date = $1
+        WHERE id = $2
+        RETURNING id, name, last_name, phone_number, created_at, expire_date
+    `;
+
+    const result = await pool.query(query, [newExpireDate, id]);
+
+    const row = result.rows[0];
+
+    return new Athlete({
+        id: row.id,
+        name: row.name,
+        lastName: row.last_name,
+        phoneNumber: row.phone_number,
+        createdAt: row.created_at,
+        expire_date: row.expire_date
+    });
+}
+
+
 }
 
 module.exports = AthleteRepository;
