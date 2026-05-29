@@ -25,6 +25,8 @@ app.post('/register/athlete' ,authMiddleware , roleCheck,athleteController.regis
 
 app.get('/athletes' , authMiddleware ,roleCheck , athleteController.getAll)
 app.get('/athlete/fullname' , authMiddleware ,roleCheck , athleteController.getAthleteByFullname)
+app.patch('/athlete/:id/renew' , authMiddleware ,roleCheck , athleteController.renewAthlete)
+
 
 
 
